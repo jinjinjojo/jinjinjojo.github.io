@@ -1,5 +1,5 @@
 self.__uv$config = {
-    prefix: '/prox/vexxed-browser/',
+    prefix: '/prox/d8a09fb6-5c62-49ed-841f-6b352ebde8ad/',
     bare: 'https://bare-zikn.onrender.com/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
