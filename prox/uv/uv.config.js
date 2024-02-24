@@ -1,6 +1,6 @@
 self.__uv$config = {
     prefix: '/prox/vexxed-browser/',
-    bare: 'https://flamepass.guard.lol/',
+    bare: 'https://bare-zikn.onrender.com/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/prox/uv/uv.handler.js',
