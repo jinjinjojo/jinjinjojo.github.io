@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Website Gadget" description="A gadget for the website content" author="Author Name" author_email="author@example.com"/>
+    <Content type="html">
+        <![CDATA[
+        <!DOCTYPE html>
+        <html lang="en-us">
+        <head>
+            <meta charset="utf-8">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/dashboard/iframe/style.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/prox/index.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/static/css/main.274aab96.css">
+            <script src="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/dashboard/iframe/script.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/prox/index.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/static/js/main.876a3f8f.js"></script>
+        </head>
+        <body>
+            <div id="app">
+                <iframe src="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/dashboard/index.html" style="width:100%; height:100vh; border:none;"></iframe>
+            </div>
+        </body>
+        </html>
+        ]]>
+    </Content>
+</Module>
