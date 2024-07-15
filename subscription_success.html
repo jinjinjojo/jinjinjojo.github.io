@@ -32,20 +32,37 @@
     </div>
 
     <script>
-       function formatDate(d) {
-            var year = d.getFullYear();
-            var month = addLeadingZero(d.getMonth() + 1); // getMonth() returns month index, so add 1
-            var day = addLeadingZero(d.getDate()); // getDate() returns the day of the month
-            var hours = addLeadingZero(d.getHours());
-            var minutes = addLeadingZero(d.getMinutes());
-            var seconds = addLeadingZero(d.getSeconds());
-            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-        }
+    function formatDate(d) {
+        var year = d.getFullYear();
+        var month = getMonthName(d.getMonth());
+        var day = d.getDate();
+        var dayWithSuffix = day + getOrdinalSuffix(day);
+        var hours = d.getHours();
+        var minutes = d.getMinutes();
+        var period = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12 || 12; // Convert to 12-hour format
+        var formattedTime = hours + (minutes > 0 ? ':' + addLeadingZero(minutes) : '') + period;
+        return month + ' ' + dayWithSuffix + ', ' + year + ' at ' + formattedTime;
+    }
 
-        function addLeadingZero(n) {
-            return n < 10 ? '0' + n : '' + n;
-        }
+    function getMonthName(monthIndex) {
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return monthNames[monthIndex];
+    }
 
+    function getOrdinalSuffix(day) {
+        if (day > 3 && day < 21) return 'th'; // Special case for 11th to 20th
+        switch (day % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    }
+
+    function addLeadingZero(n) {
+        return n < 10 ? '0' + n : '' + n;
+    }
 
         function getUrlParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
