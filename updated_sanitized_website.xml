@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Module>
-    <ModulePrefs title="Example Gadget" description="An example gadget" author="Author Name" author_email="author@example.com"/>
-    <Content type="html">
-        <![CDATA[
-        <!-- Your HTML content here -->
-        ]]>
-    </Content>
-</Module>
