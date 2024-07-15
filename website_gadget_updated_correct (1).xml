@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Math Homework Learner" description="A gadget for Math Homework Learner website" author="Author Name" author_email="author@example.com"/>
+    <Content type="html">
+        <![CDATA[
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+            <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/mathlogo.jpg">
+            <style>
+                .pointer-events-none {
+                    pointer-events: none;
+                }
+            </style>
+        </head>
+        <body class="bg-blue-50 min-h-screen flex flex-col">
+            <!-- Navigation Bar -->
+            <header class="bg-blue-700 text-white shadow-md">
+                <div class="container mx-auto flex justify-between items-center py-4 px-6">
+                    <a href="#">
+                        <div class="text-2xl font-semibold">
+                            <img src="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/mathlogo.jpg" alt="Math Homework Learner Logo" class="h-8 inline">
+                            MathWork - Math Learner
+                        </div>
+                    </a>
+                    <nav class="space-x-4">
+                        <a href="#">Home</a>
+                        <a href="#">About Us</a>
+                        <a href="#">Math Problems</a>
+                        <a href="#">Tutorials</a>
+                        <a href="#">Resources</a>
+                        <a href="#">Contact Us</a>
+                    </nav>
+                </div>
+            </header>
+            <main class="flex-grow container mx-auto py-4 px-6">
+                <!-- Main content here -->
+            </main>
+            <footer class="bg-blue-700 text-white py-4 text-center">
+                &copy; 2024 Math Homework Learner
+            </footer>
+            <script src="https://cdn.jsdelivr.net/gh/jinjinjojo/jinjinjojo.github.io@56966660b99b7923b34f355274457c86bc0a1a62/STATIC_officialflamepass-main/dashboard/iframe/script.js"></script>
+        </body>
+        </html>
+        ]]>
+    </Content>
+</Module>
