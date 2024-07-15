@@ -32,16 +32,20 @@
     </div>
 
     <script>
-        function formatDate(d){
+       function formatDate(d) {
             var year = d.getFullYear();
-            var month = addLeadingZero(d.getMonth());
-            var day = addLeadingZero(d.getDay());
-            var hours = d.getHours();
-            var minutes = d.getMinutes();
-            var seconds = d.getSeconds();
-            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
+            var month = addLeadingZero(d.getMonth() + 1); // getMonth() returns month index, so add 1
+            var day = addLeadingZero(d.getDate()); // getDate() returns the day of the month
+            var hours = addLeadingZero(d.getHours());
+            var minutes = addLeadingZero(d.getMinutes());
+            var seconds = addLeadingZero(d.getSeconds());
+            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
         }
-        function addLeadingZero(n){ return n < 10 ? '0'+n : ''+n }
+
+        function addLeadingZero(n) {
+            return n < 10 ? '0' + n : '' + n;
+        }
+
 
         function getUrlParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -52,7 +56,8 @@
             const token = getUrlParameter('token');
             const expiration = getUrlParameter('expiration');
             document.getElementById('token').textContent = token || 'No token provided';
-            document.getElementById('expiration').textContent = formatDate(new Date(expiration)) || 'No expiration date provided';
+            var date = new Date(expiration);
+            document.getElementById('expiration').textContent = formatDate(date) || 'No expiration date provided';
         }
     </script>
 </body>
