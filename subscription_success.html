@@ -41,6 +41,8 @@
             var seconds = d.getSeconds();
             return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
         }
+        function addLeadingZero(n){ return n < 10 ? '0'+n : ''+n }
+
         function getUrlParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
