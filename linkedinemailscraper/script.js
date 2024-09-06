@@ -76,32 +76,65 @@ function processText(text) {
 
     const totalContacts = results.length;
     const formattedData = formatForSpreadsheet(results);
-    
-    downloadCSV(formattedData, `contacts_${totalContacts}.csv`);
 
-    document.getElementById('result').innerText = `Formatted Data for Google Sheets (${totalContacts} total contacts):\n\n${formattedData}`;
+    // Create and download the spreadsheet
+    createAndDownloadSpreadsheet(results, totalContacts);
 }
 
 // Function to format data for easy pasting into Google Sheets
 function formatForSpreadsheet(data) {
-    if (data.length === 0) return "No data found.";
-    return data.map(entry => `${entry.email}\t${entry.name}`).join('\n');
+    if (data.length === 0) return [];
+    return data.map(entry => ({ email: entry.email, name: entry.name }));
 }
 
-// Function to trigger file download
-function downloadCSV(data, filename) {
-    const blob = new Blob([data], { type: 'text/csv' });
+// Function to create and download a spreadsheet
+function createAndDownloadSpreadsheet(data, totalContacts) {
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(data, { header: ["email", "name"] });
+    XLSX.utils.book_append_sheet(wb, ws, "Contacts");
+
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+    // Create a Blob and trigger a download
+    const blob = new Blob([s2ab(wbout)], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename;
+    a.download = `contacts_${totalContacts}.xlsx`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+
+    // Reset button state
+    const button = document.getElementById('processButton');
+    button.classList.remove('opacity-50', 'cursor-not-allowed');
+    button.disabled = false;
+    document.getElementById('loadingSpinner').classList.add('hidden');
+    document.getElementById('buttonText').innerText = 'Process Text';
 }
 
-// Event listener for the button
-document.getElementById('processButton').addEventListener('click', () => {
-    const inputText = document.getElementById('inputText').value;
+// Function to convert string to ArrayBuffer
+function s2ab(s) {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
+
+// Function to handle the button click
+function processButtonClicked() {
+    const button = document.getElementById('processButton');
+    const inputText = document.getElementById('inputText').value.trim();
+
+    if (!inputText) {
+        alert('Please input your text');
+        return;
+    }
+
+    button.classList.add('opacity-50', 'cursor-not-allowed');
+    button.disabled = true;
+    document.getElementById('loadingSpinner').classList.remove('hidden');
+    document.getElementById('buttonText').innerText = 'Processing...';
+
     processText(inputText);
-});
+}
