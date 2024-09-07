@@ -68,7 +68,10 @@ function processText(text) {
                 formattedName = removeTrailingSpaces(formattedName);
 
                 if (formattedName) {
-                    results.push({ email: email, name: formattedName });
+                    const nameParts = formattedName.split(' ');
+                    const firstName = nameParts[0] || ''; // First name
+                    const lastName = nameParts[1] || ''; // Last name (if available)
+                    results.push({ email: email, firstName: firstName, lastName: lastName });
                 }
 
                 currentName = ''; // Reset currentName after adding to results
@@ -85,13 +88,15 @@ function processText(text) {
     });
 
     if (currentName) {
-        // Check if name starts with "Like" or is "Like Load"
         let formattedName = capitalizeName(cleanName(currentName));
         formattedName = removeTrailingPunctuation(formattedName);
         formattedName = removeTrailingSpaces(formattedName);
 
         if (formattedName) {
-            results.push({ email: 'No email found', name: formattedName });
+            const nameParts = formattedName.split(' ');
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts[1] || '';
+            results.push({ email: 'No email found', firstName: firstName, lastName: lastName });
         }
     }
 
@@ -105,13 +110,20 @@ function processText(text) {
 // Function to format data for easy pasting into Google Sheets
 function formatForSpreadsheet(data) {
     if (data.length === 0) return [];
-    return data.map(entry => ({ email: entry.email, name: entry.name }));
+    return data.map(entry => ({
+        email: entry.email,
+        firstName: entry.firstName,
+        lastName: entry.lastName,
+    }));
 }
 
 // Function to create and download a spreadsheet
 function createAndDownloadSpreadsheet(data, totalContacts) {
     const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(data, { header: ["email", "name"] });
+    const ws = XLSX.utils.json_to_sheet(data, { header: ["email", "firstName", "lastName"] });
+
+    // Add headers to the sheet
+    XLSX.utils.sheet_add_aoa(ws, [["Email Address", "First Name", "Last Name"]], { origin: "A1" });
     XLSX.utils.book_append_sheet(wb, ws, "Contacts");
 
     const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
