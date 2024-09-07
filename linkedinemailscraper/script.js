@@ -61,12 +61,18 @@ function processText(text) {
 
         if (email) {
             if (currentName) {
-                let formattedName = capitalizeName(cleanName(currentName));
-                if (formattedName) { // Only push if the name is not empty (i.e., ignored "Like Load")
+                // Check if name starts with "Like" or is "Like Load"
+                if (currentName.startsWith('Like ')) {
+                    currentName = currentName.slice(5); // Remove "Like "
+                }
+                
+                if (currentName !== 'Load') { // Skip "Like Load" names
+                    let formattedName = capitalizeName(cleanName(currentName));
                     formattedName = removeTrailingPunctuation(formattedName);
                     formattedName = removeTrailingSpaces(formattedName);
                     results.push({ email: email, name: formattedName });
                 }
+
                 currentName = ''; // Reset currentName after adding to results
             }
             capturingName = false; // Email found, stop capturing name
@@ -81,8 +87,13 @@ function processText(text) {
     });
 
     if (currentName) {
-        let formattedName = capitalizeName(cleanName(currentName));
-        if (formattedName) { // Only push if the name is not empty
+        // Check if name starts with "Like" or is "Like Load"
+        if (currentName.startsWith('Like ')) {
+            currentName = currentName.slice(5); // Remove "Like "
+        }
+        
+        if (currentName !== 'Load') { // Skip "Like Load" names
+            let formattedName = capitalizeName(cleanName(currentName));
             formattedName = removeTrailingPunctuation(formattedName);
             formattedName = removeTrailingSpaces(formattedName);
             results.push({ email: 'No email found', name: formattedName });
