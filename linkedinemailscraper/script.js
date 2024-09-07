@@ -29,12 +29,23 @@ function isPotentialName(line) {
     return line.length > 1 && !line.match(/^(Like|Reply|[0-9]+|[•]+|^$|^\s*$|^\S+@\S+)/) && !line.includes("Skip to");
 }
 
-// Function to clean and format name by removing everything after the first two spaces
+// Function to clean and format name by removing "Like" at the beginning and everything after the first two words
 function cleanName(name) {
+    // Remove "Like " from the start of the name
+    if (name.startsWith('Like ')) {
+        name = name.slice(5); // Remove the "Like " part
+    }
+
+    // If the name is "Like Load", ignore it
+    if (name === 'Load') {
+        return ''; // Return empty string to indicate it should be ignored
+    }
+
     const parts = name.split(' ');
     if (parts.length <= 2) {
-        return name.trim();
+        return name.trim(); // If it has 2 words or less, return as is
     }
+
     return parts.slice(0, 2).join(' ').trim(); // Keep only the first two parts of the name
 }
 
@@ -51,9 +62,11 @@ function processText(text) {
         if (email) {
             if (currentName) {
                 let formattedName = capitalizeName(cleanName(currentName));
-                formattedName = removeTrailingPunctuation(formattedName);
-                formattedName = removeTrailingSpaces(formattedName);
-                results.push({ email: email, name: formattedName });
+                if (formattedName) { // Only push if the name is not empty (i.e., ignored "Like Load")
+                    formattedName = removeTrailingPunctuation(formattedName);
+                    formattedName = removeTrailingSpaces(formattedName);
+                    results.push({ email: email, name: formattedName });
+                }
                 currentName = ''; // Reset currentName after adding to results
             }
             capturingName = false; // Email found, stop capturing name
@@ -69,9 +82,11 @@ function processText(text) {
 
     if (currentName) {
         let formattedName = capitalizeName(cleanName(currentName));
-        formattedName = removeTrailingPunctuation(formattedName);
-        formattedName = removeTrailingSpaces(formattedName);
-        results.push({ email: 'No email found', name: formattedName });
+        if (formattedName) { // Only push if the name is not empty
+            formattedName = removeTrailingPunctuation(formattedName);
+            formattedName = removeTrailingSpaces(formattedName);
+            results.push({ email: 'No email found', name: formattedName });
+        }
     }
 
     const totalContacts = results.length;
