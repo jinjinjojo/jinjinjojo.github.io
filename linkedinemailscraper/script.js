@@ -127,7 +127,7 @@ function processButtonClicked() {
     const inputText = document.getElementById('inputText').value.trim();
 
     if (!inputText) {
-        alert('Please input your text');
+        alert('Please input your text!');
         return;
     }
 
