@@ -32,15 +32,16 @@ function isPotentialName(line) {
 // Function to clean and format name by removing "Like" at the beginning and everything after the first two words
 function cleanName(name) {
     // Remove "Like " from the start of the name
-    if (name.startsWith('Like ')) {
+    if (name.startsWith('Like ') || name.startsWith('like ')) {
         name = name.slice(5); // Remove the "Like " part
     }
 
     // If the name is "Like Load", ignore it
-    if (name === 'Load') {
+    if (name === 'Load' || name === 'load') {
         return ''; // Return empty string to indicate it should be ignored
     }
 
+    // Clean up name to ensure only the first two parts are kept
     const parts = name.split(' ');
     if (parts.length <= 2) {
         return name.trim(); // If it has 2 words or less, return as is
@@ -62,14 +63,11 @@ function processText(text) {
         if (email) {
             if (currentName) {
                 // Check if name starts with "Like" or is "Like Load"
-                if (currentName.startsWith('Like ')) {
-                    currentName = currentName.slice(5); // Remove "Like "
-                }
-                
-                if (currentName !== 'Load') { // Skip "Like Load" names
-                    let formattedName = capitalizeName(cleanName(currentName));
-                    formattedName = removeTrailingPunctuation(formattedName);
-                    formattedName = removeTrailingSpaces(formattedName);
+                let formattedName = capitalizeName(cleanName(currentName));
+                formattedName = removeTrailingPunctuation(formattedName);
+                formattedName = removeTrailingSpaces(formattedName);
+
+                if (formattedName) {
                     results.push({ email: email, name: formattedName });
                 }
 
@@ -88,14 +86,11 @@ function processText(text) {
 
     if (currentName) {
         // Check if name starts with "Like" or is "Like Load"
-        if (currentName.startsWith('Like ')) {
-            currentName = currentName.slice(5); // Remove "Like "
-        }
-        
-        if (currentName !== 'Load') { // Skip "Like Load" names
-            let formattedName = capitalizeName(cleanName(currentName));
-            formattedName = removeTrailingPunctuation(formattedName);
-            formattedName = removeTrailingSpaces(formattedName);
+        let formattedName = capitalizeName(cleanName(currentName));
+        formattedName = removeTrailingPunctuation(formattedName);
+        formattedName = removeTrailingSpaces(formattedName);
+
+        if (formattedName) {
             results.push({ email: 'No email found', name: formattedName });
         }
     }
