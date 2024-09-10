@@ -114,6 +114,11 @@ function simulateClickAndCopy() {
         }, 500); // Wait 500 ms before clicking
     }
 
+    // Hide all reply items before copying
+    document.querySelectorAll('.comments-reply-item').forEach(function(reply) {
+        reply.style.display = 'none';
+    });
+
     // Prepare the content to copy
     const prefix = "LinkedIn Scraper: ";
     const bodyContent = document.body.innerText; // Get the text content of the body
