@@ -104,7 +104,7 @@ function processText(text) {
     const formattedData = formatForSpreadsheet(results);
 
     // Create and download the spreadsheet
-    createAndDownloadSpreadsheet(results, totalContacts);
+    createAndDownloadCSV(results, totalContacts);
 }
 
 // Function to format data for easy pasting into Google Sheets
@@ -117,23 +117,22 @@ function formatForSpreadsheet(data) {
     }));
 }
 
-// Function to create and download a spreadsheet
-function createAndDownloadSpreadsheet(data, totalContacts) {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(data, { header: ["email", "firstName", "lastName"] });
+// Function to create and download a CSV file
+function createAndDownloadCSV(data, totalContacts) {
+    // Add headers to the CSV
+    let csvContent = "Email Address,First Name,Last Name\n";
 
-    // Add headers to the sheet
-    XLSX.utils.sheet_add_aoa(ws, [["Email Address", "First Name", "Last Name"]], { origin: "A1" });
-    XLSX.utils.book_append_sheet(wb, ws, "Contacts");
-
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    // Format the data into CSV format
+    data.forEach((entry) => {
+        csvContent += `${entry.email},${entry.firstName},${entry.lastName}\n`;
+    });
 
     // Create a Blob and trigger a download
-    const blob = new Blob([s2ab(wbout)], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `contacts_${totalContacts}.xlsx`;
+    a.download = `contacts_${totalContacts}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -145,6 +144,7 @@ function createAndDownloadSpreadsheet(data, totalContacts) {
     document.getElementById('loadingSpinner').classList.add('hidden');
     document.getElementById('buttonText').innerText = 'Process Text';
 }
+
 
 // Function to convert string to ArrayBuffer
 function s2ab(s) {
