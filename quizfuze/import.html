@@ -75,7 +75,7 @@
             const file = fileInput.files[0];
             const reader = new FileReader();
             const importPassword = importPasswordInput.value;
-            
+
             loadingDiv.classList.remove('hidden');
             importButton.disabled = true;
 
@@ -83,19 +83,20 @@
                 const content = event.target.result;
 
                 try {
-                    const response = await fetch(`/api/import?importPassword=${importPassword}`, {
+                    const response = await fetch('/api/import', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: content
+                        body: JSON.stringify({ flashcardSets: JSON.parse(content), password: importPassword }) // Send password along with content
                     });
 
+                    const result = await response.json(); // Parse the JSON response
+
                     if (response.ok) {
-                        const result = await response.json();
-                        logMessage(`Successfully imported: ${result.title}`);
+                        logMessage(`Successfully imported: ${result.message || 'Flashcards imported successfully.'}`);
                     } else {
-                        logMessage(`Failed to import: ${response.statusText}`);
+                        logMessage(`Failed to import: ${result.message || response.statusText}`);
                     }
                 } catch (error) {
                     logMessage(`Error: ${error.message}`);
