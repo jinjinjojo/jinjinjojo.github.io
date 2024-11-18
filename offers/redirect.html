@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continue on Mobile</title>
+    <title>Starbound Jobs - Continue on Mobile</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         // Detect the device type
@@ -37,16 +37,24 @@
                     width: 200,
                     height: 200,
                 });
+                document.getElementById("message").innerText = "Scan this QR code with your phone to continue.";
             }
         });
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="text-center p-6 bg-white shadow-lg rounded-lg">
-        <h1 class="text-xl font-semibold mb-4 text-gray-800">Please Continue on Your Mobile Device</h1>
-        <div id="qrcode" class="mx-auto mb-4"></div>
-        <p id="message" class="text-gray-600"></p>
+<body class="bg-gradient-to-b from-blue-50 to-blue-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-md text-center">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Continue on Your Mobile Device</h1>
+        <p id="message" class="text-gray-600 mb-6"></p>
+        <div id="qrcode" class="flex justify-center mb-4"></div>
+        <p class="text-sm text-gray-500">Point your phone's camera at the QR code to open the link.</p>
+        <p class="text-sm text-gray-500">This offer is only available on your mobile device.</p>
+        <div class="mt-6">
+            <a href="#" class="text-blue-600 hover:underline text-sm" id="fallback-link">
+                Can’t scan? Copy the link here.
+            </a>
+        </div>
     </div>
 </body>
 </html>
