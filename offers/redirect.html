@@ -56,7 +56,7 @@
                 fallbackLink.innerText = "Click here to copy the link.";
                 fallbackLink.onclick = copyToClipboard;
 
-                document.getElementById("message").innerText = "Scan this QR code with your phone to claim your offer.";
+                document.getElementById("message").innerText = "(No App Download Required)";
             }
         });
     </script>
@@ -68,7 +68,7 @@
         <p id="message" class="text-gray-600 mb-6"></p>
         <div id="qrcode" class="flex justify-center mb-4"></div>
         <p class="text-sm text-gray-500">This offer is only available on your mobile device.</p>
-        <p class="text-sm text-gray-500">Please take a moment to point your phone's camera at the QR code to open the link.</p>
+        <p class="text-sm text-gray-500">Scan this QR code with your phone to claim your offer.</p>
         <div class="mt-6">
             <a href="#" class="text-blue-600 hover:underline text-sm" id="fallback-link"></a>
         </div>
