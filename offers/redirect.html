@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continue on Mobile</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        // Detect the device type
+        function isMobile() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            return /android|iphone|ipad|iPod/i.test(userAgent);
+        }
+
+        // Extract the 'url' parameter from the query string
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const targetUrl = getQueryParameter("url");
+
+            if (!targetUrl) {
+                document.getElementById("message").innerText =
+                    "No URL provided. Please provide a valid URL parameter.";
+                return;
+            }
+
+            if (isMobile()) {
+                window.location.href = targetUrl; // Redirect if on mobile
+            } else {
+                // Show the QR code
+                const qrContainer = document.getElementById("qrcode");
+                new QRCode(qrContainer, {
+                    text: targetUrl,
+                    width: 200,
+                    height: 200,
+                });
+            }
+        });
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="text-center p-6 bg-white shadow-lg rounded-lg">
+        <h1 class="text-xl font-semibold mb-4 text-gray-800">Please Continue on Your Mobile Device</h1>
+        <div id="qrcode" class="mx-auto mb-4"></div>
+        <p id="message" class="text-gray-600"></p>
+    </div>
+</body>
+</html>
