@@ -18,6 +18,18 @@
             return urlParams.get(name);
         }
 
+        // Copy URL to clipboard
+        function copyToClipboard() {
+            const targetUrl = getQueryParameter("url");
+            if (targetUrl) {
+                navigator.clipboard.writeText(targetUrl).then(function() {
+                    alert("Link copied to clipboard!");
+                }).catch(function(error) {
+                    alert("Failed to copy the link.");
+                });
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const targetUrl = getQueryParameter("url");
 
@@ -37,7 +49,14 @@
                     width: 200,
                     height: 200,
                 });
-                document.getElementById("message").innerText = "Scan this QR code with your phone to continue.";
+
+                // Update the fallback link
+                const fallbackLink = document.getElementById("fallback-link");
+                fallbackLink.href = "#";
+                fallbackLink.innerText = "Click here to copy the link.";
+                fallbackLink.onclick = copyToClipboard;
+
+                document.getElementById("message").innerText = "Scan this QR code with your phone to claim your offer.";
             }
         });
     </script>
@@ -48,12 +67,10 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Continue on Your Mobile Device</h1>
         <p id="message" class="text-gray-600 mb-6"></p>
         <div id="qrcode" class="flex justify-center mb-4"></div>
-        <p class="text-sm text-gray-500">Point your phone's camera at the QR code to open the link.</p>
         <p class="text-sm text-gray-500">This offer is only available on your mobile device.</p>
+        <p class="text-sm text-gray-500">Please take a moment to point your phone's camera at the QR code to open the link.</p>
         <div class="mt-6">
-            <a href="#" class="text-blue-600 hover:underline text-sm" id="fallback-link">
-                Can’t scan? Copy the link here.
-            </a>
+            <a href="#" class="text-blue-600 hover:underline text-sm" id="fallback-link"></a>
         </div>
     </div>
 </body>
