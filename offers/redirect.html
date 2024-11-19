@@ -12,7 +12,7 @@
             return /android|iphone|ipad|iPod/i.test(userAgent);
         }
 
-        // Extract the 'url' parameter from the query string
+        // Extract a parameter from the query string
         function getQueryParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
@@ -32,10 +32,14 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             const targetUrl = getQueryParameter("url");
+            const textParam = getQueryParameter("text") || "No App Download Required";
+
+            // Update the message with text parameter
+            const messageElement = document.getElementById("message");
+            messageElement.innerText = textParam;
 
             if (!targetUrl) {
-                document.getElementById("message").innerText =
-                    "No URL provided. Please provide a valid URL parameter.";
+                messageElement.innerText = "No URL provided. Please provide a valid URL parameter.";
                 return;
             }
 
@@ -55,8 +59,6 @@
                 fallbackLink.href = "#";
                 fallbackLink.innerText = "Click here to copy the link.";
                 fallbackLink.onclick = copyToClipboard;
-
-                document.getElementById("message").innerText = "(No App Download Required)";
             }
         });
     </script>
